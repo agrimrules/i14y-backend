@@ -1,0 +1,65 @@
+title: i14y-backend
+version: 1
+baseUri: /
+
+protocols:
+  - http
+mediaType: application/json
+/patient:
+  /{id}:
+    description: This is the patients unique hash
+    post:
+      description: This Endpoint ties users hash to a given EHR record
+      body:
+        application/json:
+          example: |
+            {
+              "ehrId": "<EHR record linked>"
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                "status": "created",
+                "pHash": "PatientsHash",
+                "ehrId": "Electronic Linked record"
+                }
+    get:
+      description: This will return all EHR data tied to a patients Hashcode
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                      "label": "Insulin",
+                      "value": "XXml"
+                  },
+                  {
+                      "label": "Blood pressure",
+                      "value": "XXX/XX"
+                  }
+                ]
+/ehr:
+  description: This endpoint will be used by Healthcare professionals
+   to create electronic health records.
+   post:
+     body:
+       application/json:
+         example: |
+           {
+	           "label":"Blood pressure",
+	           "value": "XXX/XX"
+           }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [{
+                  "status": "saved",
+                  "ehrId": "uniqueID"
+                }]
